@@ -1,0 +1,6 @@
+declare const DEFAULT_PROFILE_PICTURE: string;
+declare const DEFAULT_PROFILE_DESCRIPTION: string;
+declare const DEFAULT_CONTACTS: string[];
+declare const DEFAULT_LOCATION_FOR_PHOTOS = "http::/supabase/storage/";
+declare const STORAGE_ROOT = "";
+export { DEFAULT_PROFILE_DESCRIPTION, DEFAULT_PROFILE_PICTURE, DEFAULT_CONTACTS, DEFAULT_LOCATION_FOR_PHOTOS, STORAGE_ROOT };

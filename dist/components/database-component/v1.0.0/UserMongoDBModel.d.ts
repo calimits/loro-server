@@ -1,0 +1,30 @@
+import { Model } from "mongoose";
+import { iUserDB } from "../../service-component/v1.0.0/database-interfaces/iUserDB.js";
+import { UserPublicProfile, UserPrivateProfile, UserAuth, User } from "../../../types/UserTypes.js";
+declare class UserMongoDbModel implements iUserDB {
+    private userModel;
+    private withOptionalSession;
+    constructor(userModel: Model<User>);
+    createUser(user: UserPrivateProfile): Promise<void>;
+    createManyUsers(users: UserPrivateProfile[]): Promise<void>;
+    createContact(userID: string, contactID: string): Promise<void>;
+    readUserForAuth(name: string): Promise<UserAuth>;
+    readUserByID(id: string): Promise<UserPublicProfile>;
+    readUserByEmail(email: string): Promise<UserPublicProfile>;
+    readUserByName(name: string): Promise<UserPublicProfile>;
+    readManyUsersByID(ids: string[]): Promise<UserPublicProfile[]>;
+    readManyUsersByEmail(emails: string[]): Promise<UserPublicProfile[]>;
+    readManyUsersByName(names: string[]): Promise<UserPublicProfile[]>;
+    readAllUsers(start?: number, limit?: number): Promise<UserPublicProfile[]>;
+    readContacts(userID: string, start?: number, limit?: number): Promise<string[]>;
+    updateUserInfo(id: string, user: UserPrivateProfile): Promise<void>;
+    updateUserName(id: string, name: string): Promise<void>;
+    updateUserEmail(id: string, email: string): Promise<void>;
+    updateUserPassword(id: string, password: string): Promise<void>;
+    updateUserDescription(id: string, description: string): Promise<void>;
+    updateUserProfilePhoto(id: string, profilePhoto: string): Promise<void>;
+    deleteUser(id: string): Promise<void>;
+    deleteContact(userID: string, contactID: string): Promise<void>;
+    deleteManyContacts(userID: string, contactIDs: string[]): Promise<void>;
+}
+export { UserMongoDbModel };

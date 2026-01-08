@@ -1,0 +1,50 @@
+import { Dotenv } from "../../components/environment-config-component/v1.0.0/Dotenv.js";
+import { MongoDBClient } from "../../components/database-component/v1.0.0/MongoDBClient.js";
+import { UserMongoDbModel } from "../../components/database-component/v1.0.0/UserMongoDBModel.js";
+import { User } from "../../components/database-component/v1.0.0/models/UserModel.js";
+import mongoose from "mongoose";
+import { ChatMongoDBModel } from "../../components/database-component/v1.0.0/ChatMongoDBModel.js";
+import { Chat } from "../../components/database-component/v1.0.0/models/ChatModel.js";
+import { MessageMongoDBModel } from "../../components/database-component/v1.0.0/MessageMongoDBModel.js";
+import { Message } from "../../components/database-component/v1.0.0/models/MessageModel.js";
+import { MongoTransactionManager } from "../../components/database-component/v1.0.0/MongoTransactionManager.js";
+import { BCrypt } from "../../components/encryption-component/v1.0.0/BCrypt.js";
+import { JWTProvider } from "../../components/token-provider-component/v1.0.0/JWTProvider.js";
+import { ValidatorFactory } from "../../components/validation-component/v1.0.0/ValidatorFactory.js";
+import { TokenMongoDBModel } from "../../components/database-component/v1.0.0/TokenMongoDBModel.js";
+import { Token } from "../../components/database-component/v1.0.0/models/TokenModel.js";
+import { socketStorage } from "../../components/server-component/v1.0.0/SocketStorageInstance.js";
+import { SocketIOEmitter } from "../../components/server-component/v1.0.0/SocketIOEmitter.js";
+import { ExpressServer } from "../../components/server-component/v1.0.0/ExpressServer.js";
+import http from "http";
+import { SocketioServer } from "../../components/server-component/v1.0.0/SocketioServer.js";
+import { createServices } from "../../components/main-component/v1.0.0/utils/createServices.js";
+const dotenv = new Dotenv();
+dotenv.setUp();
+const mongoClient = new MongoDBClient(mongoose);
+const userModel = new UserMongoDbModel(User);
+const chatModel = new ChatMongoDBModel(Chat);
+const messageModel = new MessageMongoDBModel(Message);
+const mongoTransaction = new MongoTransactionManager();
+let tokenModel = new TokenMongoDBModel(Token);
+let userDB = new UserMongoDbModel(User);
+let bcrypt = new BCrypt();
+let tokenProvider = new JWTProvider();
+let validatorFactory = new ValidatorFactory();
+await mongoClient.connect(String(process.env.DB));
+//configuring webServer
+const webServer = new ExpressServer(3000, "localhost");
+webServer.configGlobalMiddleWare();
+//creating http server
+const httpServer = http.createServer(webServer.getServer());
+//creating socket server
+const socketsServer = new SocketioServer(socketStorage);
+socketsServer.initialize(httpServer);
+const socketEmitter = new SocketIOEmitter(socketsServer.getServer(), socketStorage);
+//creating services
+const { msgService, chatService, userService } = createServices(socketEmitter);
+const chatID = '69066a110f29e42c13df855c';
+const userID = '6888d6a2249e2e927e96b443';
+await chatService.deleteMemberFromChat(chatID, userID, userID);
+const chats = await chatService.getAllChatsForOneUser(userID);
+console.log(chats);

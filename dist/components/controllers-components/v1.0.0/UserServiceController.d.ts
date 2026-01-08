@@ -1,0 +1,45 @@
+import { Request, Response } from 'express';
+import { UserService } from '../../service-component/v1.0.0/UserService.js';
+declare class UserServiceController {
+    private userService;
+    constructor(userService: UserService);
+    getAllUsers(req: Request, res: Response): Promise<void>;
+    getUserByID(req: Request, res: Response): Promise<void>;
+    getManyUsersByID(req: Request, res: Response): Promise<void>;
+    getUserByName(req: Request, res: Response): Promise<void>;
+    getUserContacts(req: Request, res: Response): Promise<void>;
+    signIn(req: Request, res: Response): Promise<void>;
+    refreshTokens(req: Request, res: Response): Promise<void>;
+    logout(req: Request, res: Response): Promise<void>;
+    signUp(req: Request, res: Response): Promise<void>;
+    addContact2User(req: Request, res: Response): Promise<void>;
+    updateUserName(req: Request, res: Response): Promise<void>;
+    updateUserEmail(req: Request, res: Response): Promise<void>;
+    updateUserDescription(req: Request, res: Response): Promise<void>;
+    updateUserPassword(req: Request, res: Response): Promise<void>;
+    updateUserProfilePhoto(req: Request, res: Response): Promise<void>;
+    deleteUser(req: Request, res: Response): Promise<void>;
+    deleteContactFromUser(req: Request, res: Response): Promise<void>;
+    deleteManyContactsFromUser(req: Request, res: Response): Promise<void>;
+    getRoutes(): {
+        getAllUsers: (req: Request, res: Response) => Promise<void>;
+        getUserByID: (req: Request, res: Response) => Promise<void>;
+        getManyUsersByID: (req: Request, res: Response) => Promise<void>;
+        getUserByName: (req: Request, res: Response) => Promise<void>;
+        getUserContacts: (req: Request, res: Response) => Promise<void>;
+        signIn: (req: Request, res: Response) => Promise<void>;
+        refreshTokens: (req: Request, res: Response) => Promise<void>;
+        signUp: (req: Request, res: Response) => Promise<void>;
+        logout: (req: Request, res: Response) => Promise<void>;
+        addContact2User: (req: Request, res: Response) => Promise<void>;
+        updateUserName: (req: Request, res: Response) => Promise<void>;
+        updateUserEmail: (req: Request, res: Response) => Promise<void>;
+        updateUserDescription: (req: Request, res: Response) => Promise<void>;
+        updateUserPassword: (req: Request, res: Response) => Promise<void>;
+        updateUserProfilePhoto: (req: Request, res: Response) => Promise<void>;
+        deleteUser: (req: Request, res: Response) => Promise<void>;
+        deleteContactFromUser: (req: Request, res: Response) => Promise<void>;
+        deleteManyContactsFromUser: (req: Request, res: Response) => Promise<void>;
+    };
+}
+export { UserServiceController };

@@ -1,0 +1,10 @@
+declare const EVENT_ON_MESSAGE = "onMessage";
+declare const EVENT_ON_MESSAGE_STATUS = "onMessageStatusUpdate";
+declare const EVENT_ON_MESSAGE_UPDATE = "onTextMessageUpdate";
+declare const EVENT_ON_MESSAGE_DELETE = "onMessageDelete";
+declare const EVENT_ON_CHAT_CREATION = "onChatCreation";
+declare const EVENT_ON_MEMBER_ADDITION = "onMemberAddition";
+declare const EVENT_ON_CHAT_UPDATE = "onChatUpdate";
+declare const EVENT_ON_MEMBER_UPDATE = "onMemberUpdate";
+declare const EVENT_ON_DELETE_MEMBER = "onDeleteMemberFromChat";
+export { EVENT_ON_MESSAGE, EVENT_ON_MESSAGE_STATUS, EVENT_ON_MESSAGE_UPDATE, EVENT_ON_MESSAGE_DELETE, EVENT_ON_CHAT_CREATION, EVENT_ON_MEMBER_ADDITION, EVENT_ON_CHAT_UPDATE, EVENT_ON_MEMBER_UPDATE, EVENT_ON_DELETE_MEMBER };

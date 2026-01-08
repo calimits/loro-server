@@ -1,0 +1,43 @@
+import { iChatDB } from "./database-interfaces/iChatDB.js";
+import { iMessageDB } from "./database-interfaces/iMessageDB.js";
+import { iTransactionManager } from "./database-interfaces/iTransactionManager.js";
+import { Message, MessageBody, MessageStatus } from "../../../types/MessageTypes.js";
+import { iSocketEmmiter } from "./socket-interface/iSocketEmitter.js";
+import { iStorage } from "./storage-interface/iStorage.js";
+declare class MessageService {
+    private messageDB;
+    private chatDB;
+    private storage;
+    private transactionManager;
+    private socketEmiter;
+    constructor(messageDB: iMessageDB, chatDB: iChatDB, storage: iStorage, transactionManager: iTransactionManager, socketEmiter: iSocketEmmiter);
+    getChatMessagesForOneUser(chatID: string, userID: string, start: number, limit: number): Promise<Message[]>;
+    getUnrecievedChatMessagesForOneUser(chatID: string, userID: string, start: number, limit: number): Promise<Message[]>;
+    getAllUnrecievedMessageForOneUser(userID: string, start?: number, limit?: number): Promise<Message[]>;
+    getNumberOfUnrecievedMessagesForManyChatsForOneUser(chatIDs: string[], userID: string): Promise<Map<string, number>>;
+    getMessageStatusVerificationForOneUser(messageID: string, userID: string): Promise<MessageStatus>;
+    getManyMessageStatusVerificationForOneUser(messageIDs: string[], userID: string): Promise<MessageStatus[]>;
+    sendMessage(message: MessageBody): Promise<string | undefined>;
+    sendManyMessagesToOneChat(messages: MessageBody[]): Promise<{
+        failedMsg: MessageBody[];
+        msgIDs: (string | undefined)[];
+    }>;
+    updateOneTextMessage(messageID: string, userID: string, content: string): Promise<void>;
+    updateManyMessagesRecievedStatusForOneUser(messageIDs: string[], userID: string, isRecieved: boolean): Promise<void>;
+    updateManyMessagesReadStatusForOneUser(messageIDs: string[], userID: string, isRead: boolean): Promise<void>;
+    deleteOneMessage(messageID: string, userID: string): Promise<void>;
+    deleteManyMessagesFromOneChat(messageIDs: string[], userID: string, chatID: string): Promise<void>;
+    private validateIfUserCanSendMessageToThisChat;
+    private validateIfUserCanEditMessage;
+    private validateIfUserCanDeleteMessage;
+    private validateIfUserCanDeleteMessagesFromChat;
+    private validateIfAllMessageHaveSameChatIDAndEmisorID;
+    private buildMessageVerifications;
+    private uploadFileIfMessageTypeIsFile;
+    private saveMessageInDBBeforeSending;
+    private notifyReceptors;
+    private updateMessageRecievedVerificationinDB;
+    private updateManyMessageRecievedVerificationinDB;
+    private processMessagesToSend;
+}
+export { MessageService };
