@@ -31,7 +31,7 @@ class ExpressServer {
     configGlobalMiddleWare() {
         //configuring cors for dev, change origin for production
         this.expressApp.use(cors({
-            origin: "http://localhost:5173", //cambiar
+            origin: "https://calimits.github.io", //cambiar  http://localhost:5173
             credentials: true,
             methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
             allowedHeaders: ["Content-type", "Authorization"]
